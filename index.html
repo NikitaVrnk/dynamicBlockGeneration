@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
+    <style>
+        h2 {
+            padding-top: 30px;
+            margin-bottom: 15px;
+            font-size: 35px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1360px;
+            margin: 0 auto;
+            background-color: #EFEFEF;
+            border: 1px solid green;
+        }
+
+        .wrapper {
+            position: relative;
+            margin: 0 auto;
+            padding: 100px;
+            margin: 0px 130px;
+            max-width: 900px;
+            min-height: 200px;
+            background-color: #C4C4C4;
+        }
+
+        .add-item,
+        .delete-item,
+        .clean-items {
+            user-select: none;
+            cursor: pointer;
+            position: absolute;
+            text-align: center;
+            width: 90px;
+            height: 90px;
+            font-size: 70px;
+            line-height: 90px;
+            border-radius: 50%;
+            background-color: #FFFFFF;
+        }
+
+        .add-item {
+            left: -100px;
+            top: 30px;
+        }
+
+        .delete-item {
+            left: -100px;
+            top: 150px;
+            line-height: 20px;
+        }
+
+        .clean-items {
+            transform: rotate(45deg);
+            top: 30px;
+            right: -100px;
+        }
+
+        .wrapper-items {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin: 10px;
+            width: 200px;
+            height: 200px;
+            background: #FFFFFF;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="IP">
+        <div class="container">
+            <h2>
+                Заверстать через flexbox.
+                Блоки должны генерироваться через JS
+                после загрузки страницы.
+                По нажатию на крестик, все блоки исчезают.
+                Плюс и минус - добавить, удалить блок (последний).
+            </h2>
+
+            <div class="wrapper">
+                <div class="add-item">+</div>
+                <div class="delete-item">_</div>
+                <div class="clean-items">+</div>
+                <div class="wrapper-items"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let $wrapperItems = document.querySelector(".wrapper-items")
+    let counter = 0;
+
+    document.querySelector(".add-item").addEventListener('click', function () {
+        createItem()
+    })
+
+    function createItem() {
+        counter++
+        let $item = document.createElement('div')
+        $item.classList.add("item")
+        $wrapperItems.insertAdjacentElement('beforeend', $item)
+        $item.innerText = counter
+    }
+
+    document.querySelector(".delete-item").addEventListener('click', function () {
+        let $items = document.querySelectorAll(".item")
+
+        $items.forEach(function (item, i, $items) {
+            if (i == counter - 1) {
+                $items[i].remove()
+                counter--
+            }
+        });
+
+        //второй вариант решения оставлен для примера для себя
+        // for (i = 0; i < items.length; i++) {
+        //     if (i == counter - 1) {
+        //         items[i].remove()
+        //         counter--
+        //     }
+        // }
+    })
+
+    document.querySelector(".clean-items").addEventListener('click', function () {
+        $wrapperItems.innerHTML = ""
+        counter = 0;
+    })
+
+
+    function renderStartedItems(count) {
+        for (let i = 0; i != count; count--) {
+            createItem();
+        }
+    }
+    renderStartedItems(7)
+</script>
+
+</html>
